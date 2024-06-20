@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const PositionSchema = new mongoose.Schema({
-  id: { type: mongoose.Schema.Types.ObjectId, auto: true },
   accrued_interest: Number,
   number_of_shares: Number,
   balance: Number,
