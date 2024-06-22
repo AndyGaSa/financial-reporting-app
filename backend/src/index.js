@@ -1,11 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+app.use(cors());
 
 const successMessage = (message) => console.log(`\x1b[32m${message}\x1b[0m`);
 const errorMessage = (message) => console.log(`\x1b[31m${message}\x1b[0m`);
