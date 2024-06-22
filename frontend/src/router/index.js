@@ -1,20 +1,16 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Dashboard from '../views/Dashboard.vue';
-
-Vue.use(VueRouter);
+import { createRouter, createWebHistory } from 'vue-router';
+import FinancialDashboard from '../views/FinancialDashboard.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'Dashboard',
-    component: Dashboard,
+    name: 'FinancialDashboard',
+    component: FinancialDashboard,
   },
 ];
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 
