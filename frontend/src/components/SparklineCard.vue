@@ -25,11 +25,11 @@ export default {
 
 <style scoped>
 .box {
-  background: #333;
+  background: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
-  color: white;
+  color: #000;
 }
 .title {
   font-size: 24px;

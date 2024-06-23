@@ -19,10 +19,10 @@ export default {
 
 <style scoped>
 .investment-card {
-  background: #333;
+  background: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
-  color: white;
+  color: #000;
   text-align: center;
   margin-bottom: 20px;
 }

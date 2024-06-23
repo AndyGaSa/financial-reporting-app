@@ -23,8 +23,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #1e1e1e;
-  color: white;
+  background-color: #fff;
+  color: #000;
 }
 
 .content-area {
@@ -37,22 +37,24 @@ export default {
 }
 
 .sparkboxes .box {
-  background: #333;
+  background: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
+  color: #000;
 }
 
 .charts .chart {
-  background: #333;
+  background: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
   width: 100%;
+  color: #000;
 }
 
 .chart h2 {
-  color: white;
+  color: #000;
 }
 
 @media (min-width: 768px) {

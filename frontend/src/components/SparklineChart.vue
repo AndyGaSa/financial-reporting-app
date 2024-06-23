@@ -19,12 +19,12 @@ export default {
 
 <style scoped>
 .apexcharts-tooltip {
-  background: #333;
-  color: white;
+  background: #f8f9fa;
+  color: #000;
 }
 
 .apexcharts-title-text,
 .apexcharts-subtitle-text {
-  fill: white !important;
+  fill: #000 !important;
 }
 </style>

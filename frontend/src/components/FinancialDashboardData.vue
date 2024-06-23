@@ -2,36 +2,66 @@
   <div class="dashboard-data">
     <div class="row sparkboxes mt-4 mb-4">
       <div class="col-md-4">
-        <SparklineChart :options="spark1Options" :series="spark1Series" />
+        <SparklineCard
+          v-if="spark1Options.chart"
+          :options="spark1Options"
+          :series="spark1Series"
+          :title="
+            totalInvestedAmount.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })
+          "
+          subtitle="Total Invested Amount"
+        />
       </div>
       <div class="col-md-4">
         <NumberOfInvestmentsCard :numberOfInvestments="numberOfInvestments" />
       </div>
       <div class="col-md-4">
-        <SparklineChart :options="spark3Options" :series="spark3Series" />
+        <SparklineCard
+          v-if="spark3Options.chart"
+          :options="spark3Options"
+          :series="spark3Series"
+          :title="rateOfReturn.toFixed(2) + '%'"
+          subtitle="Rate of Return"
+        />
       </div>
     </div>
     <div class="row mt-5 mb-4">
       <div class="col-md-6">
         <h2>Balance Distribution by Investment Type</h2>
-        <BarChart :options="barChartOptions" :series="barChartData" />
+        <BarChart
+          v-if="barChartOptions.chart"
+          :options="barChartOptions"
+          :series="barChartData"
+        />
       </div>
       <div class="col-md-6">
         <h2>Balance Distribution by Currency</h2>
-        <PieChart :options="pieChartOptions" :series="pieChartData" />
+        <PieChart
+          v-if="pieChartOptions.chart"
+          :options="pieChartOptions"
+          :series="pieChartData"
+        />
       </div>
     </div>
     <div class="row mt-4 mb-4">
       <div class="col-md-6">
         <h2>Market Value vs. Exchange Rate</h2>
         <ScatterChart
+          v-if="scatterChartOptions.chart"
           :options="scatterChartOptions"
           :series="scatterChartData"
         />
       </div>
       <div class="col-md-6">
         <h2>Accumulated Balance Over Years</h2>
-        <LineChart :options="lineChartOptions" :series="lineChartData" />
+        <LineChart
+          v-if="lineChartOptions.chart"
+          :options="lineChartOptions"
+          :series="lineChartData"
+        />
       </div>
     </div>
   </div>
@@ -40,7 +70,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import SparklineChart from '@/components/SparklineChart.vue';
+import SparklineCard from '@/components/SparklineCard.vue';
 import BarChart from '@/components/BarChart.vue';
 import PieChart from '@/components/PieChart.vue';
 import LineChart from '@/components/LineChart.vue';
@@ -59,7 +89,7 @@ import {
 export default {
   name: 'FinancialDashboardData',
   components: {
-    SparklineChart,
+    SparklineCard,
     BarChart,
     PieChart,
     LineChart,
@@ -71,19 +101,17 @@ export default {
     const numberOfInvestments = ref(0);
     const rateOfReturn = ref(0);
 
-    const spark1Options = ref({});
+    const spark1Options = ref({ chart: null });
     const spark1Series = ref([]);
-    const spark2Options = ref({});
-    const spark2Series = ref([]);
-    const spark3Options = ref({});
+    const spark3Options = ref({ chart: null });
     const spark3Series = ref([]);
-    const lineChartOptions = ref({});
+    const lineChartOptions = ref({ chart: null });
     const lineChartData = ref([]);
-    const barChartOptions = ref({});
+    const barChartOptions = ref({ chart: null });
     const barChartData = ref([]);
-    const pieChartOptions = ref({});
+    const pieChartOptions = ref({ chart: null });
     const pieChartData = ref([]);
-    const scatterChartOptions = ref({});
+    const scatterChartOptions = ref({ chart: null });
     const scatterChartData = ref([]);
 
     onMounted(async () => {
@@ -111,19 +139,6 @@ export default {
           fill: { opacity: 0.3 },
           yaxis: { min: 0 },
           colors: ['#DCE6EC'],
-          title: {
-            text: totalInvestedAmount.value.toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD',
-            }),
-            offsetX: 0,
-            style: { fontSize: '24px' },
-          },
-          subtitle: {
-            text: 'Total Invested Amount',
-            offsetX: 0,
-            style: { fontSize: '14px' },
-          },
         };
 
         spark3Series.value = [{ data: sparklineDataReturn }];
@@ -137,16 +152,6 @@ export default {
           fill: { opacity: 0.3 },
           yaxis: { min: 0 },
           colors: ['#DCE6EC'],
-          title: {
-            text: rateOfReturn.value.toFixed(2) + '%',
-            offsetX: 0,
-            style: { fontSize: '24px' },
-          },
-          subtitle: {
-            text: 'Rate of Return',
-            offsetX: 0,
-            style: { fontSize: '14px' },
-          },
         };
 
         const accumulatedBalances = accumulateBalancesByYear(positions);
@@ -162,7 +167,6 @@ export default {
         lineChartOptions.value = {
           chart: {
             type: 'line',
-            foreColor: '#fff',
           },
           xaxis: {
             categories: lineChartCategories,
@@ -170,6 +174,7 @@ export default {
           title: {
             text: 'Accumulated Balance Over Years',
             align: 'center',
+            style: { color: '#000' },
           },
         };
 
@@ -186,7 +191,6 @@ export default {
         barChartOptions.value = {
           chart: {
             type: 'bar',
-            foreColor: '#fff',
           },
           xaxis: {
             categories: barChartCategories,
@@ -194,6 +198,7 @@ export default {
           title: {
             text: 'Balance Distribution by Investment Type',
             align: 'center',
+            style: { color: '#000' },
           },
         };
 
@@ -205,12 +210,12 @@ export default {
         pieChartOptions.value = {
           chart: {
             type: 'pie',
-            foreColor: '#fff',
           },
           labels: pieChartLabels,
           title: {
             text: 'Balance Distribution by Currency',
             align: 'center',
+            style: { color: '#000' },
           },
         };
 
@@ -223,7 +228,6 @@ export default {
         scatterChartOptions.value = {
           chart: {
             type: 'scatter',
-            foreColor: '#fff',
           },
           xaxis: {
             categories: positions.map((position) => position.type),
@@ -231,6 +235,7 @@ export default {
           title: {
             text: 'Market Value vs. Exchange Rate',
             align: 'center',
+            style: { color: '#000' },
           },
         };
       } catch (error) {
@@ -244,8 +249,6 @@ export default {
       rateOfReturn,
       spark1Options,
       spark1Series,
-      spark2Options,
-      spark2Series,
       spark3Options,
       spark3Series,
       lineChartOptions,
@@ -260,3 +263,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.dashboard-data {
+  color: #000;
+}
+</style>

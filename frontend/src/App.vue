@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="dark">
+  <div id="app" class="light">
     <router-view />
   </div>
 </template>
@@ -14,9 +14,9 @@ export default {
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~font-awesome/css/font-awesome.min.css';
 
-body.dark {
-  background-color: #1e1e1e;
-  color: white;
+body.light {
+  background-color: #fff;
+  color: #000;
   font-family: 'Titillium Web', sans-serif;
 }
 
@@ -30,14 +30,14 @@ body.dark {
 }
 
 .sparkboxes .box {
-  background: #333;
+  background: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
 }
 
 .charts .chart {
-  background: #333;
+  background: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -45,7 +45,7 @@ body.dark {
 }
 
 .chart h2 {
-  color: white;
+  color: #000;
 }
 
 @media (min-width: 768px) {
