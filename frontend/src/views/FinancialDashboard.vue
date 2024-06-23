@@ -23,8 +23,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fff;
+  background-color: #f9f9f9;
   color: #000;
+  height: 100%;
 }
 
 .content-area {

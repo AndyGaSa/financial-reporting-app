@@ -14,19 +14,23 @@ export default {
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~font-awesome/css/font-awesome.min.css';
 
-body.light {
-  background-color: #fff;
+#app {
+  background-color: #eff4f7;
+}
+body {
+  background-color: #eff4f7;
   color: #000;
   font-family: 'Titillium Web', sans-serif;
 }
 
 .content-area {
-  padding: 20px;
+  padding: 10px;
+  background-color: #eff4f7;
 }
 
 .main {
-  max-width: 1200px;
   margin: auto;
+  background-color: #eff4f7;
 }
 
 .sparkboxes .box {
