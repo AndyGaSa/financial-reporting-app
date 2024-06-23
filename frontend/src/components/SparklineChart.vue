@@ -1,7 +1,5 @@
 <template>
-  <div id="sparkline-chart">
-    <apexchart type="area" :options="options" :series="series"></apexchart>
-  </div>
+  <apexchart :options="options" :series="series" />
 </template>
 
 <script>
@@ -13,23 +11,20 @@ export default {
     apexchart: VueApexCharts,
   },
   props: {
-    options: {
-      type: Object,
-      required: true,
-    },
-    series: {
-      type: Array,
-      required: true,
-    },
+    options: Object,
+    series: Array,
   },
 };
 </script>
 
 <style scoped>
-#sparkline-chart {
+.apexcharts-tooltip {
   background: #333;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  color: white;
+}
+
+.apexcharts-title-text,
+.apexcharts-subtitle-text {
+  fill: white !important;
 }
 </style>

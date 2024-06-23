@@ -1,30 +1,51 @@
 <template>
-  <div>
-    <slot
-      :totalInvestedAmount="totalInvestedAmount"
-      :numberOfInvestments="numberOfInvestments"
-      :rateOfReturn="rateOfReturn"
-      :spark1Options="spark1Options"
-      :spark1Series="spark1Series"
-      :spark2Options="spark2Options"
-      :spark2Series="spark2Series"
-      :spark3Options="spark3Options"
-      :spark3Series="spark3Series"
-      :lineChartOptions="lineChartOptions"
-      :lineChartData="lineChartData"
-      :barChartOptions="barChartOptions"
-      :barChartData="barChartData"
-      :pieChartOptions="pieChartOptions"
-      :pieChartData="pieChartData"
-      :scatterChartOptions="scatterChartOptions"
-      :scatterChartData="scatterChartData"
-    ></slot>
+  <div class="dashboard-data">
+    <div class="row sparkboxes mt-4 mb-4">
+      <div class="col-md-4">
+        <SparklineChart :options="spark1Options" :series="spark1Series" />
+      </div>
+      <div class="col-md-4">
+        <NumberOfInvestmentsCard :numberOfInvestments="numberOfInvestments" />
+      </div>
+      <div class="col-md-4">
+        <SparklineChart :options="spark3Options" :series="spark3Series" />
+      </div>
+    </div>
+    <div class="row mt-5 mb-4">
+      <div class="col-md-6">
+        <h2>Balance Distribution by Investment Type</h2>
+        <BarChart :options="barChartOptions" :series="barChartData" />
+      </div>
+      <div class="col-md-6">
+        <h2>Balance Distribution by Currency</h2>
+        <PieChart :options="pieChartOptions" :series="pieChartData" />
+      </div>
+    </div>
+    <div class="row mt-4 mb-4">
+      <div class="col-md-6">
+        <h2>Market Value vs. Exchange Rate</h2>
+        <ScatterChart
+          :options="scatterChartOptions"
+          :series="scatterChartData"
+        />
+      </div>
+      <div class="col-md-6">
+        <h2>Accumulated Balance Over Years</h2>
+        <LineChart :options="lineChartOptions" :series="lineChartData" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import SparklineChart from '@/components/SparklineChart.vue';
+import BarChart from '@/components/BarChart.vue';
+import PieChart from '@/components/PieChart.vue';
+import LineChart from '@/components/LineChart.vue';
+import ScatterChart from '@/components/ScatterChart.vue';
+import NumberOfInvestmentsCard from '@/components/NumberOfInvestmentsCard.vue';
 import {
   calculateTotalInvestedAmount,
   calculateNumberOfInvestments,
@@ -37,6 +58,14 @@ import {
 
 export default {
   name: 'FinancialDashboardData',
+  components: {
+    SparklineChart,
+    BarChart,
+    PieChart,
+    LineChart,
+    ScatterChart,
+    NumberOfInvestmentsCard,
+  },
   setup() {
     const totalInvestedAmount = ref(0);
     const numberOfInvestments = ref(0);
@@ -66,9 +95,12 @@ export default {
         numberOfInvestments.value = calculateNumberOfInvestments(positions);
         rateOfReturn.value = calculateRateOfReturn(positions);
 
-        const sparklineData = positions.map((position) => position.balance);
+        const sparklineDataCost = positions.map((position) => position.cost);
+        const sparklineDataReturn = positions.map(
+          (position) => position.accrued_interest
+        );
 
-        spark1Series.value = [{ data: sparklineData }];
+        spark1Series.value = [{ data: sparklineDataCost }];
         spark1Options.value = {
           chart: {
             type: 'area',
@@ -94,30 +126,7 @@ export default {
           },
         };
 
-        spark2Series.value = [{ data: sparklineData }];
-        spark2Options.value = {
-          chart: {
-            type: 'area',
-            height: 160,
-            sparkline: { enabled: true },
-          },
-          stroke: { curve: 'straight' },
-          fill: { opacity: 0.3 },
-          yaxis: { min: 0 },
-          colors: ['#DCE6EC'],
-          title: {
-            text: numberOfInvestments.value.toString(),
-            offsetX: 0,
-            style: { fontSize: '24px' },
-          },
-          subtitle: {
-            text: 'Number of Investments',
-            offsetX: 0,
-            style: { fontSize: '14px' },
-          },
-        };
-
-        spark3Series.value = [{ data: sparklineData }];
+        spark3Series.value = [{ data: sparklineDataReturn }];
         spark3Options.value = {
           chart: {
             type: 'area',
