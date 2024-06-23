@@ -1,67 +1,52 @@
 <template>
   <div class="dashboard-data">
-    <div class="row sparkboxes mt-4 mb-4">
-      <div class="col-md-4">
-        <SparklineCard
-          v-if="spark1Options.chart"
-          :options="spark1Options"
-          :series="spark1Series"
-          :title="
-            totalInvestedAmount.toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD',
-            })
-          "
-          subtitle="Total Invested Amount"
-        />
+    <LoadingSpinner v-if="loading" />
+    <div v-else>
+      <div class="row sparkboxes mt-4 mb-4">
+        <div class="col-md-4">
+          <SummaryCard
+            :value="totalInvestedAmountFormatted"
+            label="Total Invested Amount"
+            :icon="['fas', 'dollar-sign']"
+          />
+        </div>
+        <div class="col-md-4">
+          <SummaryCard
+            :value="numberOfInvestments"
+            label="Number of Investments"
+            :icon="['fas', 'chart-line']"
+          />
+        </div>
+        <div class="col-md-4">
+          <SummaryCard
+            :value="rateOfReturnFormatted"
+            label="Rate of Return"
+            :icon="['fas', 'sync-alt']"
+          />
+        </div>
       </div>
-      <div class="col-md-4">
-        <NumberOfInvestmentsCard :numberOfInvestments="numberOfInvestments" />
+      <div class="row mt-5 mb-4">
+        <div class="col-md-6">
+          <h2>Balance Distribution by Investment Type</h2>
+          <BarChart :options="barChartOptions" :series="barChartData" />
+        </div>
+        <div class="col-md-6">
+          <h2>Balance Distribution by Currency</h2>
+          <PieChart :options="pieChartOptions" :series="pieChartData" />
+        </div>
       </div>
-      <div class="col-md-4">
-        <SparklineCard
-          v-if="spark3Options.chart"
-          :options="spark3Options"
-          :series="spark3Series"
-          :title="rateOfReturn.toFixed(2) + '%'"
-          subtitle="Rate of Return"
-        />
-      </div>
-    </div>
-    <div class="row mt-5 mb-4">
-      <div class="col-md-6">
-        <h2>Balance Distribution by Investment Type</h2>
-        <BarChart
-          v-if="barChartOptions.chart"
-          :options="barChartOptions"
-          :series="barChartData"
-        />
-      </div>
-      <div class="col-md-6">
-        <h2>Balance Distribution by Currency</h2>
-        <PieChart
-          v-if="pieChartOptions.chart"
-          :options="pieChartOptions"
-          :series="pieChartData"
-        />
-      </div>
-    </div>
-    <div class="row mt-4 mb-4">
-      <div class="col-md-6">
-        <h2>Market Value vs. Exchange Rate</h2>
-        <ScatterChart
-          v-if="scatterChartOptions.chart"
-          :options="scatterChartOptions"
-          :series="scatterChartData"
-        />
-      </div>
-      <div class="col-md-6">
-        <h2>Accumulated Balance Over Years</h2>
-        <LineChart
-          v-if="lineChartOptions.chart"
-          :options="lineChartOptions"
-          :series="lineChartData"
-        />
+      <div class="row mt-4 mb-4">
+        <div class="col-md-6">
+          <h2>Market Value vs. Exchange Rate</h2>
+          <ScatterChart
+            :options="scatterChartOptions"
+            :series="scatterChartData"
+          />
+        </div>
+        <div class="col-md-6">
+          <h2>Accumulated Balance Over Years</h2>
+          <LineChart :options="lineChartOptions" :series="lineChartData" />
+        </div>
       </div>
     </div>
   </div>
@@ -70,12 +55,12 @@
 <script>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import SparklineCard from '@/components/SparklineCard.vue';
+import SummaryCard from '@/components/SummaryCard.vue';
 import BarChart from '@/components/BarChart.vue';
 import PieChart from '@/components/PieChart.vue';
 import LineChart from '@/components/LineChart.vue';
 import ScatterChart from '@/components/ScatterChart.vue';
-import NumberOfInvestmentsCard from '@/components/NumberOfInvestmentsCard.vue';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import {
   calculateTotalInvestedAmount,
   calculateNumberOfInvestments,
@@ -89,29 +74,28 @@ import {
 export default {
   name: 'FinancialDashboardData',
   components: {
-    SparklineCard,
+    SummaryCard,
     BarChart,
     PieChart,
     LineChart,
     ScatterChart,
-    NumberOfInvestmentsCard,
+    LoadingSpinner,
   },
   setup() {
     const totalInvestedAmount = ref(0);
     const numberOfInvestments = ref(0);
     const rateOfReturn = ref(0);
+    const totalInvestedAmountFormatted = ref('');
+    const rateOfReturnFormatted = ref('');
+    const loading = ref(true);
 
-    const spark1Options = ref({ chart: null });
-    const spark1Series = ref([]);
-    const spark3Options = ref({ chart: null });
-    const spark3Series = ref([]);
-    const lineChartOptions = ref({ chart: null });
+    const lineChartOptions = ref({});
     const lineChartData = ref([]);
-    const barChartOptions = ref({ chart: null });
+    const barChartOptions = ref({});
     const barChartData = ref([]);
-    const pieChartOptions = ref({ chart: null });
+    const pieChartOptions = ref({});
     const pieChartData = ref([]);
-    const scatterChartOptions = ref({ chart: null });
+    const scatterChartOptions = ref({});
     const scatterChartData = ref([]);
 
     onMounted(async () => {
@@ -123,36 +107,12 @@ export default {
         numberOfInvestments.value = calculateNumberOfInvestments(positions);
         rateOfReturn.value = calculateRateOfReturn(positions);
 
-        const sparklineDataCost = positions.map((position) => position.cost);
-        const sparklineDataReturn = positions.map(
-          (position) => position.accrued_interest
-        );
-
-        spark1Series.value = [{ data: sparklineDataCost }];
-        spark1Options.value = {
-          chart: {
-            type: 'area',
-            height: 160,
-            sparkline: { enabled: true },
-          },
-          stroke: { curve: 'straight' },
-          fill: { opacity: 0.3 },
-          yaxis: { min: 0 },
-          colors: ['#DCE6EC'],
-        };
-
-        spark3Series.value = [{ data: sparklineDataReturn }];
-        spark3Options.value = {
-          chart: {
-            type: 'area',
-            height: 160,
-            sparkline: { enabled: true },
-          },
-          stroke: { curve: 'straight' },
-          fill: { opacity: 0.3 },
-          yaxis: { min: 0 },
-          colors: ['#DCE6EC'],
-        };
+        totalInvestedAmountFormatted.value =
+          totalInvestedAmount.value.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          });
+        rateOfReturnFormatted.value = rateOfReturn.value.toFixed(2) + '%';
 
         const accumulatedBalances = accumulateBalancesByYear(positions);
         const lineChartCategories = Object.keys(accumulatedBalances);
@@ -167,6 +127,7 @@ export default {
         lineChartOptions.value = {
           chart: {
             type: 'line',
+            foreColor: '#333',
           },
           xaxis: {
             categories: lineChartCategories,
@@ -174,7 +135,6 @@ export default {
           title: {
             text: 'Accumulated Balance Over Years',
             align: 'center',
-            style: { color: '#000' },
           },
         };
 
@@ -191,6 +151,7 @@ export default {
         barChartOptions.value = {
           chart: {
             type: 'bar',
+            foreColor: '#333',
           },
           xaxis: {
             categories: barChartCategories,
@@ -198,7 +159,6 @@ export default {
           title: {
             text: 'Balance Distribution by Investment Type',
             align: 'center',
-            style: { color: '#000' },
           },
         };
 
@@ -210,12 +170,12 @@ export default {
         pieChartOptions.value = {
           chart: {
             type: 'pie',
+            foreColor: '#333',
           },
           labels: pieChartLabels,
           title: {
             text: 'Balance Distribution by Currency',
             align: 'center',
-            style: { color: '#000' },
           },
         };
 
@@ -228,6 +188,7 @@ export default {
         scatterChartOptions.value = {
           chart: {
             type: 'scatter',
+            foreColor: '#333',
           },
           xaxis: {
             categories: positions.map((position) => position.type),
@@ -235,22 +196,19 @@ export default {
           title: {
             text: 'Market Value vs. Exchange Rate',
             align: 'center',
-            style: { color: '#000' },
           },
         };
       } catch (error) {
         console.error('Error fetching positions:', error);
+      } finally {
+        loading.value = false;
       }
     });
 
     return {
-      totalInvestedAmount,
+      totalInvestedAmountFormatted,
       numberOfInvestments,
-      rateOfReturn,
-      spark1Options,
-      spark1Series,
-      spark3Options,
-      spark3Series,
+      rateOfReturnFormatted,
       lineChartOptions,
       lineChartData,
       barChartOptions,
@@ -259,6 +217,7 @@ export default {
       pieChartData,
       scatterChartOptions,
       scatterChartData,
+      loading,
     };
   },
 };
@@ -266,6 +225,54 @@ export default {
 
 <style scoped>
 .dashboard-data {
-  color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 20px;
+}
+
+.sparkboxes .summary-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.col-md-4 {
+  flex: 1;
+  margin: 10px;
+}
+
+.charts .chart {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.chart h2 {
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .chart {
+    width: 48%;
+  }
 }
 </style>

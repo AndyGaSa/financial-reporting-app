@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="light">
+  <div id="app">
     <router-view />
   </div>
 </template>
@@ -42,6 +42,7 @@ body.light {
   border-radius: 10px;
   margin-bottom: 20px;
   width: 100%;
+  color: #000;
 }
 
 .chart h2 {
