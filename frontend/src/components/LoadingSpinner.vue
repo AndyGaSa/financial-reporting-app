@@ -15,9 +15,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 150px;
+  padding-top: 35vh;
   width: 100%;
   height: 100%;
-  background-color: #fff;
 }
 
 .loader {

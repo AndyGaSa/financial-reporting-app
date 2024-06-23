@@ -228,7 +228,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: #eff4f7;
   color: #333;
   padding: 20px;
 }
