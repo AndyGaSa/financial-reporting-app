@@ -217,7 +217,7 @@ export default {
         pieChartData.value = pieChartSeries;
         pieChartOptions.value = {
           chart: {
-            type: 'pie',
+            type: 'donut',
             foreColor: '#333',
           },
           labels: pieChartLabels,
