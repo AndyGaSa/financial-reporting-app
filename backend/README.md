@@ -40,8 +40,8 @@ npm start
 
 ## API Endpoints
 
-* `GET /api/positions` - Retrieve all positions.
-* `POST /api/positions` - Create a position.
+- `GET /api/positions` - Retrieve all positions.
+- `POST /api/positions` - Create a position.
 
 ## Data Import Script
 
@@ -50,4 +50,12 @@ To use it update the csvFilePath to your csv file path and execute the script us
 
 ```sh
 node importCsv.js
+```
+
+## Testing
+
+To run the test suite run the following command on your terminal:
+
+```sh
+npm test
 ```
