@@ -28,13 +28,11 @@
       <div class="row mt-5 mb-4">
         <div class="col-md-6">
           <div class="chart-container">
-            <h2>Balance Distribution by Investment Type</h2>
             <BarChart :options="barChartOptions" :series="barChartData" />
           </div>
         </div>
         <div class="col-md-6">
           <div class="chart-container">
-            <h2>Balance Distribution by Currency</h2>
             <PieChart :options="pieChartOptions" :series="pieChartData" />
           </div>
         </div>
@@ -42,7 +40,6 @@
       <div class="row mt-4 mb-4">
         <div class="col-md-6">
           <div class="chart-container">
-            <h2>Market Value vs. Exchange Rate</h2>
             <ScatterChart
               :options="scatterChartOptions"
               :series="scatterChartData"
@@ -51,7 +48,6 @@
         </div>
         <div class="col-md-6">
           <div class="chart-container">
-            <h2>Accumulated Balance Over Years</h2>
             <LineChart :options="lineChartOptions" :series="lineChartData" />
           </div>
         </div>
@@ -233,11 +229,8 @@ export default {
 
 <style scoped>
 .dashboard-data {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   color: #333;
-  padding: 20px;
+  padding: 0px 220px;
 }
 
 .sparkboxes .summary-card {
@@ -261,11 +254,6 @@ export default {
   flex-wrap: wrap;
 }
 
-.col-md-4 {
-  flex: 0 0 31%;
-  margin: 10px 1%;
-}
-
 .chart-container {
   background: #fff;
   padding: 20px;
@@ -273,6 +261,7 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   width: 100%;
+  min-height: 300px;
 }
 
 .chart-container h2 {

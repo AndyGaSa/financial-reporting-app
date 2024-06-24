@@ -19,27 +19,18 @@ export default {
 </script>
 
 <style scoped>
-#dashboard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #eff4f7;
-  color: #000;
-  height: 100%;
-  width: 100%;
-}
-
 h1 {
   text-align: center;
 }
 
 .content-area {
-  padding: 10px;
+  width: 100%;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
   .chart {
-    width: 48%;
+    width: 50%;
   }
 }
 </style>
