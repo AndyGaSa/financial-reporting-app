@@ -15,7 +15,7 @@ export function calculateRateOfReturn(positions) {
     (total, position) => total + position.balance,
     0
   );
-  return ((totalBalance - totalCost) / totalCost) * 100;
+  return totalCost ? ((totalBalance - totalCost) / totalCost) * 100 : 0;
 }
 
 export function accumulateBalancesByYear(positions) {
@@ -25,7 +25,7 @@ export function accumulateBalancesByYear(positions) {
     if (!balancesByYear[year]) {
       balancesByYear[year] = 0;
     }
-    balancesByYear[year] += position.balance;
+    balancesByYear[year] += position.balance || 0;
   });
   return balancesByYear;
 }
@@ -36,7 +36,7 @@ export function balanceDistributionByType(positions) {
     if (!distribution[position.type]) {
       distribution[position.type] = 0;
     }
-    distribution[position.type] += position.balance;
+    distribution[position.type] += position.balance || 0;
   });
   return distribution;
 }
@@ -47,7 +47,7 @@ export function balanceDistributionByCurrency(positions) {
     if (!distribution[position.currency]) {
       distribution[position.currency] = 0;
     }
-    distribution[position.currency] += position.balance;
+    distribution[position.currency] += position.balance || 0;
   });
   return distribution;
 }
@@ -55,20 +55,20 @@ export function balanceDistributionByCurrency(positions) {
 export function marketValueVsExchangeRate(positions) {
   return positions.map((position) => ({
     x: position.rate_to_euro,
-    y: position.balance,
+    y: position.balance || 0,
   }));
 }
 
 export function prepareTreemapData(positions) {
   let seriesData = positions.map((position) => ({
     x: position.name,
-    y: parseFloat(position.balance),
+    y: parseFloat(position.balance) || 0,
   }));
 
-  seriesData.sort((a, b) => b.y - a.y); 
+  seriesData.sort((a, b) => b.y - a.y);
 
-  const topPositions = seriesData.slice(0, 9); 
-  const others = seriesData.slice(9).reduce((acc, curr) => acc + curr.y, 0); 
+  const topPositions = seriesData.slice(0, 9);
+  const others = seriesData.slice(9).reduce((acc, curr) => acc + curr.y, 0);
 
   if (others > 0) {
     topPositions.push({ x: 'Others', y: others });

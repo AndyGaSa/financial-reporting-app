@@ -116,8 +116,14 @@ export default {
         rateOfReturnFormatted.value = rateOfReturn.value.toFixed(2) + '%';
 
         const accumulatedBalances = accumulateBalancesByYear(positions);
-        const lineChartCategories = Object.keys(accumulatedBalances);
-        const lineChartValues = Object.values(accumulatedBalances);
+        const lineChartCategories = Object.keys(accumulatedBalances).filter(
+          (year) =>
+            !isNaN(accumulatedBalances[year]) &&
+            accumulatedBalances[year] !== null
+        );
+        const lineChartValues = lineChartCategories.map(
+          (year) => accumulatedBalances[year]
+        );
         lineChartData.value = [
           {
             name: 'Accumulated Balance',
@@ -132,9 +138,30 @@ export default {
           xaxis: {
             categories: lineChartCategories,
           },
+          yaxis: {
+            labels: {
+              formatter: function (value) {
+                return value >= 1000000
+                  ? `${(value / 1000000).toFixed(1)}M`
+                  : `${(value / 1000).toFixed(1)}K`;
+              },
+            },
+          },
           title: {
             text: 'Accumulated Balance Over Years',
             align: 'center',
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+              return val >= 1000000
+                ? `${(val / 1000000).toFixed(1)}M`
+                : `${(val / 1000).toFixed(1)}K`;
+            },
+            style: {
+              fontSize: '12px',
+              colors: ['#304758'],
+            },
           },
         };
 
