@@ -65,10 +65,10 @@ export function prepareTreemapData(positions) {
     y: parseFloat(position.balance),
   }));
 
-  seriesData.sort((a, b) => b.y - a.y); // Sort descending by balance
+  seriesData.sort((a, b) => b.y - a.y); 
 
-  const topPositions = seriesData.slice(0, 9); // Get the top 9 positions
-  const others = seriesData.slice(9).reduce((acc, curr) => acc + curr.y, 0); // Sum the rest
+  const topPositions = seriesData.slice(0, 9); 
+  const others = seriesData.slice(9).reduce((acc, curr) => acc + curr.y, 0); 
 
   if (others > 0) {
     topPositions.push({ x: 'Others', y: others });
