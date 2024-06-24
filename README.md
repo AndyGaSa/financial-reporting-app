@@ -32,4 +32,4 @@ cd financial-dashboard
 
 ### Setup backend and frontend to run the project
 
-See [backend/README.md]([https://www.google.com](https://github.com/AndyGaSa/financial-reporting-app/tree/main/backend)) and [frontend/README.md]([https://www.google.com](https://github.com/AndyGaSa/financial-reporting-app/tree/main/frontend)) for detailed instructions.
+See [backend/README.md](https://github.com/AndyGaSa/financial-reporting-app/tree/main/backend) and [frontend/README.md](https://github.com/AndyGaSa/financial-reporting-app/tree/main/frontend) for detailed instructions.
