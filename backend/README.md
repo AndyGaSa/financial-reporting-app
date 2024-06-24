@@ -59,3 +59,7 @@ To run the test suite run the following command on your terminal:
 ```sh
 npm test
 ```
+
+## Docker Setup
+
+If you prefer to run the project via Docker see the general app [README.md](https://github.com/AndyGaSa/financial-reporting-app) file.

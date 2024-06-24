@@ -15,29 +15,32 @@ This is the frontend application for the Financial Dashboard project, built with
 
 1. Navigate to the frontend directory:
 
-    ```sh
-    cd frontend
-    ```
+   ```sh
+   cd frontend
+   ```
 
 2. Install dependencies:
 
-    ```sh
-    npm install
-    ```
+   ```sh
+   npm install
+   ```
 
 3. Running the app:
 
 #### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 #### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 #### Lints and fixes files
+
 ```
 npm run lint
 ```
@@ -59,3 +62,7 @@ This project uses mock data coming from a dataset. The dataset includes a `portf
 1. Start the backend server (follow the backend `README` instructions).
 2. Start the frontend server.
 3. Access the application at `http://localhost:8080` (or the port specified by Vue).
+
+## Docker Setup
+
+If you prefer to run the project via Docker see the general app [README.md](https://github.com/AndyGaSa/financial-reporting-app) file.
