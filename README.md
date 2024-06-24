@@ -33,3 +33,7 @@ cd financial-dashboard
 ### Setup backend and frontend to run the project
 
 See [backend/README.md](https://github.com/AndyGaSa/financial-reporting-app/tree/main/backend) and [frontend/README.md](https://github.com/AndyGaSa/financial-reporting-app/tree/main/frontend) for detailed instructions.
+
+## Mock Data Notice
+
+This project uses mock data coming from a dataset. The dataset includes a `portfolio_id` field, but for the purposes of this demo, all data is treated as part of one portfolio. Additionally, data entries without names are considered invalid.
