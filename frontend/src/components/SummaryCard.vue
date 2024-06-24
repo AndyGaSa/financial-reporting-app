@@ -46,6 +46,9 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: row;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .icon {

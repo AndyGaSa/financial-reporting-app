@@ -233,20 +233,6 @@ export default {
   padding: 0 20%;
 }
 
-.sparkboxes .summary-card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  color: #333;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-}
-
 .row {
   display: flex;
   width: 100%;
