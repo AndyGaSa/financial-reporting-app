@@ -60,7 +60,7 @@ Navigate to the root directory of the project and build the Docker image for the
 
 Do the same for the frontend:
 
-    ```sh
+   ```sh
    docker build -t financial_dashboard_frontend_image -f frontend/Dockerfile ./frontend
    ```
 
@@ -68,6 +68,6 @@ Do the same for the frontend:
 
 Start the services using Docker Compose from your terminal:
 
-    ```sh
-   docker-compose up --build
+  ```sh
+  docker-compose up --build
    ```
