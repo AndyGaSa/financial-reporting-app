@@ -23,6 +23,10 @@ This project is a financial dashboard that visualizes various financial metrics 
 - npm (Node package manager)
 - MongoDB
 
+(optional)
+- Docker
+- Docker compose
+
 ### Clone the Repository
 
 ```sh
@@ -37,3 +41,33 @@ See [backend/README.md](https://github.com/AndyGaSa/financial-reporting-app/tree
 ## Mock Data Notice
 
 This project uses mock data coming from a dataset. The dataset includes a `portfolio_id` field, but for the purposes of this demo, all data is treated as part of one portfolio. Additionally, data entries without names are considered invalid.
+
+## Docker Setup
+
+If you prefer to run the project via Docker follow this steps:
+
+2. **Adjust docker-compose.yml file to have your MongoDb url:**
+
+Navigate to the root directory of the project and change the docker-compose.yml file line 15 to your actual MongoDb url
+
+2. **Build Docker Image:**
+
+Navigate to the root directory of the project and build the Docker image for the backend:
+
+   ```sh
+   docker build -t financial_dashboard_backend_image -f backend/Dockerfile ./backend
+   ```
+
+Do the same for the frontend:
+
+    ```sh
+   docker build -t financial_dashboard_frontend_image -f frontend/Dockerfile ./frontend
+   ```
+
+3. **Run Docker Compose:**
+
+Start the services using Docker Compose from your terminal:
+
+    ```sh
+   docker-compose up --build
+   ```
