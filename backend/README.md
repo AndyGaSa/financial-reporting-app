@@ -1,6 +1,3 @@
-### Frontend README (`frontend/README.md`)
-
-````markdown
 # Financial Dashboard Frontend
 
 ## Overview
@@ -21,7 +18,6 @@ This is the frontend application for the Financial Dashboard project, built with
 ```sh
 cd frontend
 ```
-````
 
 2. Install dependencies
 
@@ -29,12 +25,14 @@ cd frontend
 npm install
 ```
 
-3.Environment Variables - Create a .env file in the backend directory with the following content:
+3. Environment Variables - Create a .env file in the backend directory with the following content:
 
+```sh
 MONGODB_URI=your_mongodb_uri
 PORT=3000
+```
 
-4.Running the Server - Start the server:
+4. Running the Server - Start the server:
 
 ```sh
 npm start
@@ -42,8 +40,8 @@ npm start
 
 ## API Endpoints
 
-`GET /api/positions` - Retrieve all positions.
-`POST /api/positions` - Create a position.
+* `GET /api/positions` - Retrieve all positions.
+* `POST /api/positions` - Create a position.
 
 ## Data Import Script
 
