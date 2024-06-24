@@ -96,7 +96,6 @@ export default {
     const barChartData = ref([]);
     const pieChartOptions = ref({});
     const pieChartData = ref([]);
-    const treemapData = ref({});
     const treemapOptions = ref({});
     const treemapSeries = ref([]);
 
@@ -214,7 +213,6 @@ export default {
         };
 
         const treemapResult = prepareTreemapData(positions);
-        treemapData.value = treemapResult.data;
         treemapOptions.value = treemapResult.options;
         treemapSeries.value = treemapResult.series;
       } catch (error) {
