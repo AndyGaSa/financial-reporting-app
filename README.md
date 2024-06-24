@@ -68,6 +68,6 @@ Do the same for the frontend:
 
 Start the services using Docker Compose from your terminal:
 
-    ```sh
-   docker-compose up --build
+  ```sh
+  docker-compose up --build
    ```
