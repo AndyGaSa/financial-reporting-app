@@ -1,5 +1,8 @@
 export function calculateTotalInvestedAmount(positions) {
-  return positions.reduce((total, position) => total + position.balance, 0);
+  return positions.reduce(
+    (total, position) => total + (position.balance || 0),
+    0
+  );
 }
 
 export function calculateNumberOfInvestments(positions) {
@@ -12,7 +15,7 @@ export function calculateRateOfReturn(positions) {
     0
   );
   const totalBalance = positions.reduce(
-    (total, position) => total + position.balance,
+    (total, position) => total + (position.balance || 0),
     0
   );
   return totalCost ? ((totalBalance - totalCost) / totalCost) * 100 : 0;
@@ -20,16 +23,21 @@ export function calculateRateOfReturn(positions) {
 
 export function accumulateBalancesByYear(positions) {
   const balancesByYear = {};
+
   positions.forEach((position) => {
     const year = new Date(position.valuation_date).getFullYear();
-    if (!balancesByYear[year]) {
-      balancesByYear[year] = 0;
+    const balance = parseFloat(position.balance);
+
+    if (!isNaN(balance)) {
+      if (!balancesByYear[year]) {
+        balancesByYear[year] = 0;
+      }
+      balancesByYear[year] += balance;
     }
-    balancesByYear[year] += position.balance || 0;
   });
+
   return balancesByYear;
 }
-
 export function balanceDistributionByType(positions) {
   const distribution = {};
   positions.forEach((position) => {
