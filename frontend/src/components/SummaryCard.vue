@@ -45,6 +45,7 @@ export default {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
+  flex-direction: row;
 }
 
 .icon {

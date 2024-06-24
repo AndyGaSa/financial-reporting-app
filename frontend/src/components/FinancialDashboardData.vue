@@ -230,7 +230,7 @@ export default {
 <style scoped>
 .dashboard-data {
   color: #333;
-  padding: 0px 220px;
+  padding: 0 20%;
 }
 
 .sparkboxes .summary-card {
@@ -250,18 +250,18 @@ export default {
 .row {
   display: flex;
   width: 100%;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
 .chart-container {
   background: #fff;
-  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  min-height: 100%;
+  align-content: center;
   width: 100%;
-  min-height: 300px;
+  padding: 10px;
 }
 
 .chart-container h2 {
