@@ -27,25 +27,33 @@
       </div>
       <div class="row mt-5 mb-4">
         <div class="col-md-6">
-          <h2>Balance Distribution by Investment Type</h2>
-          <BarChart :options="barChartOptions" :series="barChartData" />
+          <div class="chart-container">
+            <h2>Balance Distribution by Investment Type</h2>
+            <BarChart :options="barChartOptions" :series="barChartData" />
+          </div>
         </div>
         <div class="col-md-6">
-          <h2>Balance Distribution by Currency</h2>
-          <PieChart :options="pieChartOptions" :series="pieChartData" />
+          <div class="chart-container">
+            <h2>Balance Distribution by Currency</h2>
+            <PieChart :options="pieChartOptions" :series="pieChartData" />
+          </div>
         </div>
       </div>
       <div class="row mt-4 mb-4">
         <div class="col-md-6">
-          <h2>Market Value vs. Exchange Rate</h2>
-          <ScatterChart
-            :options="scatterChartOptions"
-            :series="scatterChartData"
-          />
+          <div class="chart-container">
+            <h2>Market Value vs. Exchange Rate</h2>
+            <ScatterChart
+              :options="scatterChartOptions"
+              :series="scatterChartData"
+            />
+          </div>
         </div>
         <div class="col-md-6">
-          <h2>Accumulated Balance Over Years</h2>
-          <LineChart :options="lineChartOptions" :series="lineChartData" />
+          <div class="chart-container">
+            <h2>Accumulated Balance Over Years</h2>
+            <LineChart :options="lineChartOptions" :series="lineChartData" />
+          </div>
         </div>
       </div>
     </div>
@@ -249,29 +257,25 @@ export default {
 .row {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .col-md-4 {
-  flex: 1;
-  margin: 10px;
+  flex: 0 0 31%;
+  margin: 10px 1%;
 }
 
-.charts .chart {
+.chart-container {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   width: 100%;
 }
 
-.chart h2 {
+.chart-container h2 {
   color: #333;
-}
-
-@media (min-width: 768px) {
-  .chart {
-    width: 48%;
-  }
 }
 </style>

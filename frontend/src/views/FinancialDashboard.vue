@@ -26,36 +26,15 @@ export default {
   background-color: #eff4f7;
   color: #000;
   height: 100%;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
 }
 
 .content-area {
-  padding: 20px;
-}
-
-.main {
-  max-width: 1200px;
-  margin: auto;
-}
-
-.sparkboxes .box {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  color: #000;
-}
-
-.charts .chart {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  color: #000;
-}
-
-.chart h2 {
-  color: #000;
+  padding: 10px;
 }
 
 @media (min-width: 768px) {
