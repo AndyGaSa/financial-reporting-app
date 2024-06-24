@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:4.2.2
+    container_name: financial_dashboard_mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    image: playground-web-backend
+    container_name: financial_dashboard_backend
+    environment:
+      - MONGODB_URI=yourmongodburi
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+
+  frontend:
+    image: playground-web-frontend
+    container_name: financial_dashboard_frontend
+    ports:
+      - 8080:80
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
