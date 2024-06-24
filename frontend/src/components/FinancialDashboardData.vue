@@ -134,6 +134,7 @@ export default {
           chart: {
             type: 'line',
             foreColor: '#333',
+            toolbar: { show: false },
           },
           xaxis: {
             categories: lineChartCategories,
