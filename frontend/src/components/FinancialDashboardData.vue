@@ -40,10 +40,7 @@
       <div class="row mt-4 mb-4">
         <div class="col-md-6">
           <div class="chart-container">
-            <ScatterChart
-              :options="scatterChartOptions"
-              :series="scatterChartData"
-            />
+            <TreemapChart :options="treemapOptions" :series="treemapSeries" />
           </div>
         </div>
         <div class="col-md-6">
@@ -63,7 +60,7 @@ import SummaryCard from '@/components/SummaryCard.vue';
 import BarChart from '@/components/BarChart.vue';
 import PieChart from '@/components/PieChart.vue';
 import LineChart from '@/components/LineChart.vue';
-import ScatterChart from '@/components/ScatterChart.vue';
+import TreemapChart from '@/components/TreemapChart.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import {
   calculateTotalInvestedAmount,
@@ -72,7 +69,7 @@ import {
   accumulateBalancesByYear,
   balanceDistributionByType,
   balanceDistributionByCurrency,
-  marketValueVsExchangeRate,
+  prepareTreemapData,
 } from '@/utils.js';
 
 export default {
@@ -82,7 +79,7 @@ export default {
     BarChart,
     PieChart,
     LineChart,
-    ScatterChart,
+    TreemapChart,
     LoadingSpinner,
   },
   setup() {
@@ -99,8 +96,9 @@ export default {
     const barChartData = ref([]);
     const pieChartOptions = ref({});
     const pieChartData = ref([]);
-    const scatterChartOptions = ref({});
-    const scatterChartData = ref([]);
+    const treemapData = ref({});
+    const treemapOptions = ref({});
+    const treemapSeries = ref([]);
 
     onMounted(async () => {
       try {
@@ -121,7 +119,6 @@ export default {
         const accumulatedBalances = accumulateBalancesByYear(positions);
         const lineChartCategories = Object.keys(accumulatedBalances);
         const lineChartValues = Object.values(accumulatedBalances);
-
         lineChartData.value = [
           {
             name: 'Accumulated Balance',
@@ -132,9 +129,6 @@ export default {
           chart: {
             type: 'line',
             foreColor: '#333',
-            toolbar: {
-              show: false,
-            },
           },
           xaxis: {
             categories: lineChartCategories,
@@ -148,7 +142,6 @@ export default {
         const typeBalances = balanceDistributionByType(positions);
         const barChartCategories = Object.keys(typeBalances);
         const barChartValues = Object.values(typeBalances);
-
         barChartData.value = [
           {
             name: 'Balance',
@@ -220,28 +213,10 @@ export default {
           ],
         };
 
-        scatterChartData.value = [
-          {
-            name: 'Market Value',
-            data: marketValueVsExchangeRate(positions),
-          },
-        ];
-        scatterChartOptions.value = {
-          chart: {
-            type: 'scatter',
-            foreColor: '#333',
-            toolbar: {
-              show: false,
-            },
-          },
-          xaxis: {
-            categories: positions.map((position) => position.type),
-          },
-          title: {
-            text: 'Market Value vs. Exchange Rate',
-            align: 'center',
-          },
-        };
+        const treemapResult = prepareTreemapData(positions);
+        treemapData.value = treemapResult.data;
+        treemapOptions.value = treemapResult.options;
+        treemapSeries.value = treemapResult.series;
       } catch (error) {
         console.error('Error fetching positions:', error);
       } finally {
@@ -259,8 +234,8 @@ export default {
       barChartData,
       pieChartOptions,
       pieChartData,
-      scatterChartOptions,
-      scatterChartData,
+      treemapOptions,
+      treemapSeries,
       loading,
     };
   },

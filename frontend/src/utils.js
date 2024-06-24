@@ -58,3 +58,45 @@ export function marketValueVsExchangeRate(positions) {
     y: position.balance,
   }));
 }
+
+export function prepareTreemapData(positions) {
+  let seriesData = positions.map((position) => ({
+    x: position.name,
+    y: parseFloat(position.balance),
+  }));
+
+  seriesData = aggregateSmallPositions(seriesData);
+
+  return {
+    series: [
+      {
+        data: seriesData,
+      },
+    ],
+    options: {
+      legend: {
+        show: true,
+      },
+      chart: {
+        type: 'treemap',
+      },
+      title: {
+        text: 'Portfolio Overview',
+        align: 'center',
+      },
+    },
+  };
+}
+
+function aggregateSmallPositions(data) {
+  const threshold = 10000;
+  const others = data
+    .filter((item) => item.y < threshold)
+    .reduce((acc, curr) => acc + curr.y, 0);
+  const mainItems = data.filter((item) => item.y >= threshold);
+
+  if (others > 0) {
+    mainItems.push({ x: 'Others', y: others });
+  }
+  return mainItems;
+}
