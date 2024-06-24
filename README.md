@@ -28,11 +28,8 @@ This project is a financial dashboard that visualizes various financial metrics 
 ```sh
 git clone https://github.com/yourusername/financial-dashboard.git
 cd financial-dashboard
+```
 
 ### Setup backend and frontend to run the project
 
-See backend/README.md  and frontend/README.md for detailed instructions.
-
-
-
-```
+See backend/README.md and frontend/README.md for detailed instructions.

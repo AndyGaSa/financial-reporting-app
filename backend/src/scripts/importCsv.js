@@ -12,9 +12,7 @@ mongoose
 
 const results = [];
 
-const csvFilePath = path.resolve(
-  'C:/Users/andyb/Downloads/positionDataset.csv'
-);
+const csvFilePath = path.resolve('C:/Users/youruser/yourdirectory/your.csv');
 
 const convertDataTypes = (data) => {
   const isValidDate = (date) => {
