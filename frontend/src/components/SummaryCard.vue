@@ -49,6 +49,7 @@ export default {
   margin-bottom: 20px;
   justify-content: space-between;
   height: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .icon {
