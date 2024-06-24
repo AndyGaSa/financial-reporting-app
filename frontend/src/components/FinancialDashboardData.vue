@@ -132,6 +132,9 @@ export default {
           chart: {
             type: 'line',
             foreColor: '#333',
+            toolbar: {
+              show: false,
+            },
           },
           xaxis: {
             categories: lineChartCategories,
@@ -160,6 +163,27 @@ export default {
           xaxis: {
             categories: barChartCategories,
           },
+          yaxis: {
+            labels: {
+              formatter: function (value) {
+                return value >= 1000000
+                  ? `${(value / 1000000).toFixed(1)}M`
+                  : `${(value / 1000).toFixed(1)}K`;
+              },
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+              return val >= 1000000
+                ? `${(val / 1000000).toFixed(1)}M`
+                : `${(val / 1000).toFixed(1)}K`;
+            },
+            style: {
+              fontSize: '12px',
+              colors: ['#304758'],
+            },
+          },
           title: {
             text: 'Balance Distribution by Investment Type',
             align: 'center',
@@ -181,6 +205,19 @@ export default {
             text: 'Balance Distribution by Currency',
             align: 'center',
           },
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 300,
+                },
+                legend: {
+                  position: 'bottom',
+                },
+              },
+            },
+          ],
         };
 
         scatterChartData.value = [
@@ -193,6 +230,9 @@ export default {
           chart: {
             type: 'scatter',
             foreColor: '#333',
+            toolbar: {
+              show: false,
+            },
           },
           xaxis: {
             categories: positions.map((position) => position.type),
@@ -248,6 +288,7 @@ export default {
   align-content: center;
   width: 100%;
   padding: 10px;
+  font-size: 16px;
 }
 
 .chart-container h2 {
