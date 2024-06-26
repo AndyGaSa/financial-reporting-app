@@ -55,13 +55,13 @@ Navigate to the root directory of the project and change the docker-compose.yml 
 Navigate to the root directory of the project and build the Docker image for the backend:
 
    ```sh
-   docker build -t financial_dashboard_backend_image -f backend/Dockerfile ./backend
+   docker build -f backend/backend.dockerfile -t financial_dashboard_backend_image .
    ```
 
 Do the same for the frontend:
 
    ```sh
-   docker build -t financial_dashboard_frontend_image -f frontend/Dockerfile ./frontend
+   docker build -f frontend/frontend.dockerfile -t financial_dashboard_frontend_image .
    ```
 
 3. **Run Docker Compose:**
