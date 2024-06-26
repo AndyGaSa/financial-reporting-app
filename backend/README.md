@@ -46,7 +46,7 @@ npm start
 ## Data Import Script
 
 The script importCsv.js into the scripts folder is used to import data from a CSV file into MongoDB.
-To use it update the csvFilePath to your csv file path and execute the script using the `node` command:
+To use it update the csvFilePath to your csv file path and navigate to your backend folder on your terminal, then execute the script using the `node` command:
 
 ```sh
 node importCsv.js
