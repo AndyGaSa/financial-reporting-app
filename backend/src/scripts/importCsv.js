@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const csv = require('csv-parser');
-require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const Position = require('../models/Position');
 
 mongoose
@@ -12,7 +12,9 @@ mongoose
 
 const results = [];
 
-const csvFilePath = path.resolve('C:/Users/youruser/yourdirectory/your.csv');
+const csvFilePath = path.resolve(
+  'C:\\Users\\youruser\\Downloads\\yourDataset.csv'
+);
 
 const convertDataTypes = (data) => {
   const isValidDate = (date) => {
